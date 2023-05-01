@@ -49,6 +49,8 @@ $result = mysqli_stmt_get_result($stmt);
     <link href="https://fonts.googleapis.com/css?family=Poppins:400,700&display=swap" rel="stylesheet">
     <!-- owl stylesheets -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/owl-carousel/1.3.3/owl.carousel.css" rel="stylesheet" />
+    <!-- BoxIcons -->
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 </head>
 
 <body>
@@ -166,17 +168,26 @@ $result = mysqli_stmt_get_result($stmt);
                             $sql = "SELECT * FROM tb_produtos WHERE i_id_produtos = $id_produto";
                             $result_produto = mysqli_query($link, $sql);
                             $tbl = mysqli_fetch_array($result_produto);
-                            echo "<div class='image_main'>";
-                            echo "<img class='imgBox' id='img-produtos/" . $tbl[0] . "' src='img-produtos/" . $tbl[4] . "'>";
-                            echo "<div class='contentBox'>";
-                            echo "<div class='price_text'>" . $tbl[1] . "</div>";
-                            echo "<div class='price_text'>R$" . $tbl[7] . "</div>";
+                            echo "<div class='product_main'>";
+                            echo "<div class='product_header'>";
+                            echo "<div class='estoque_product'>";
+                            echo "<p>RESTAM: <br> {$tbl[6]} UNID.</p>";
+                            echo "</div>";
                             echo "<form method='POST' action='remover_favorito.php?id_produto=" . $tbl[0] . "'>";
-                            echo "<button class='buy' type='submit' name='remover_favorito'>💔</button>";
+                            echo "<button type='submit' style='padding: 1rem; background: transparent;' value='comprar'><i class='bx bx-heart bx-sm bx-burst-hover'></i></button>";
+                            echo "<input type='hidden' name='id_produto' value='$tbl[0]'>";
                             echo "</form>";
-                            echo "<form action='add_carrinho.php' method='POST'>";
+                            echo "</div>";
+                            echo "<a class='imgBox' href='mostra_produtos.php?id=$tbl[0]'>";
+                            echo "<img id='img-produtos/" . $tbl[0] . "' src='img-produtos/" . $tbl[4] . "'>";
+                            echo '<div class="product_info">';
+                            echo $tbl[1] . '<br> R$' . $tbl[7] . '<br> À vista no pix';
+                            echo '</div>';
+                            echo "</a>";
+                            echo "<div class='product_buy'>";
+                            echo "<form action='add_carrinho.php' method='POST' style='display: flex; flex-direction: column; gap: 1rem;'>";
                             echo "<input type='number' name= 'quantidade' value='1'>";
-                            echo "<input type='hidden' name='id_produto' value='<?= $tbl[0] ?>'>";
+                            echo "<input type='hidden' name='id_produto' value='$tbl[0]'>";
                             echo "<button class='buy' type='submit' value='comprar'>🛒 Comprar</button>";
                             echo "</form>";
                             echo "</div>";

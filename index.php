@@ -105,7 +105,6 @@ $result = mysqli_query($link, $sql);
         if (isset($_GET['msg']) && $_GET['msg'] == 'login-cart') {
             echo '<div id="message">Faça login para visualizar o carrinho!</div>';
         }
-
         ?>
         <div class="container-fluid">
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -300,8 +299,8 @@ $result = mysqli_query($link, $sql);
                                 <div class="product_buy">
                                     <form action="add_carrinho.php" method="POST" style="display: flex; flex-direction: column; gap: 1rem;">
                                         <input type="number" name="quantidade" value="1" min="1">
-                                        <button class="buy" type="submit" value="comprar">🛒 Comprar</button>
                                         <input type="hidden" name="id_produto" value="<?= $tbl[0] ?>">
+                                        <button class="buy" type="submit" value="comprar">🛒 Comprar</button>
                                     </form>
                                 </div>
                             </div>

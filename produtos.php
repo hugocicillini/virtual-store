@@ -39,14 +39,79 @@ if (!empty($_GET['search'])) {
     <!-- fonts -->
     <link href="https://fonts.googleapis.com/css?family=Poppins:400,700&display=swap" rel="stylesheet">
     <!-- owl stylesheets -->
+    <!-- BoxIcons -->
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 </head>
 
 <body>
+    <style>
+        #message {
+            position: relative;
+            width: 100%;
+            padding: 10px;
+            background-color: transparent;
+            text-align: center;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        #message::before {
+            content: "";
+            position: absolute;
+            top: 80%;
+            left: 0%;
+            width: 100%;
+            height: .1rem;
+            background-color: #3b7197;
+            animation: running-line 2s linear forwards;
+        }
+
+        @keyframes running-line {
+            0% {
+                left: 0%;
+            }
+
+            100% {
+                left: 100%;
+            }
+        }
+    </style>
     <?php
     include('cabecalho.php');
     ?>
     <!-- header section start -->
     <div class="header_section">
+        <?php
+        if (isset($_SESSION['id']) && $_SESSION['nivel'] == 1) {
+            if (!isset($_SESSION['msg_displayed'])) {
+                echo '<div id="message">Login efetuado com sucesso!</div>';
+                $_SESSION['msg_displayed'] = true;
+            }
+        }
+
+        if (isset($_GET['msg']) && $_GET['msg'] == 'Usuário ou senha incorretos') {
+            if (!isset($_SESSION['msg_displayed_error'])) {
+                echo '<div id="message">Usuário ou senha incorretos!</div>';
+                $_SESSION['msg_displayed_error'] = true;
+            }
+        }
+
+        if (isset($_GET['msg']) && $_GET['msg'] == 'added-prod') {
+            echo '<div id="message">Produto adicionado ao carrinho!</div>';
+        }
+
+        if (isset($_GET['msg']) && $_GET['msg'] == 'login-favoritos') {
+            echo '<div id="message">Faça login para adicionar aos favoritos!</div>';
+        }
+
+        if (isset($_GET['msg']) && $_GET['msg'] == 'login-buy') {
+            echo '<div id="message">Faça login para adicionar ao carrinho!</div>';
+        }
+
+        if (isset($_GET['msg']) && $_GET['msg'] == 'login-cart') {
+            echo '<div id="message">Faça login para visualizar o carrinho!</div>';
+        }
+        ?>
         <div class="container-fluid">
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
                 <a class="logo" href="index.php"><img src="html/images/logo.png"></a>
@@ -298,6 +363,14 @@ if (!empty($_GET['search'])) {
             document.body.style.pointerEvents = "auto";
             document.querySelector("#form-" + formName).style.pointerEvents = "none";
         }
+    </script>
+    <script>
+        const message = document.getElementById('message');
+
+        message.style.display = 'block';
+        setTimeout(() => {
+            message.style.display = 'none';
+        }, 2000);
     </script>
 </body>
 
